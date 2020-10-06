@@ -1,8 +1,8 @@
 class Api::V1::EntriesController < ApplicationController
   
   def index
-    entry = Entry,all
-    render json: EntrySerializer.new(entry)
+    entries = Entry.all
+    render json: EntrySerializer.new(entries)
   end
 
   def show
