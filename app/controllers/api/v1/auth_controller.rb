@@ -1,7 +1,7 @@
 class Api::V1::AuthController < ApplicationController
 	def login
 		user = User.find_by(username: params[:user][:username])	
-		if user && user.authenticate(params[:password])	
+		if user && user.authenticate(params[:user][:password])	
 			payload = {user_id: user.id}
 			render json: (username: username)
 			# token = encode_token(payload)
