@@ -4,8 +4,8 @@ class Api::V1::AuthController < ApplicationController
 		if user && user.authenticate(params[:user][:password])	
 			payload = {user_id: user.id}
 			render json: (username: username)
-			# token = encode_token(payload)
-			# render json: (user: user, jwt: token)
+			token = encode_token(payload)
+			render json: (user: user, jwt: token)
 		else
 			render json: {failure: "Log in failed! Username or password invalid!"}
 		end 
