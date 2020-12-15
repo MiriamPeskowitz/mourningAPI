@@ -15,7 +15,6 @@ class Api::V1::UsersController < ApplicationController
     if user.save
       # jwt = Auth.encrypt({ user_id: user.id })
       render json: UserSerializer.new(user), status: :accepted
-      # do I need to serialize if I'm not sending anything back? 
       # render json: { jwt: jwt, current: user }
     else
       render json: {error: "Something didn't work; try again."}, status: :unprocessible_entity
