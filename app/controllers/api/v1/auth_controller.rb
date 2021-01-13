@@ -1,31 +1,62 @@
 class Api::V1::AuthController < ApplicationController
+
+#  login => create a new session 
 	def login
-		user = User.find_by(username: params[:username])	
-		if user && user.authenticate(params[:password])	
-			payload = {user_id: user.id}
-			token = encode_token(payload)
-			# render json: (username: username, jwt: token)
-			 render json: UserSerializer.new(user), jwt: token, status: :accepted
+		@user = User.find_by(username: params[:auth][:username])	
+
+		if @user && @user.authenticate(params[:auth][:password])	
+	 
+	 		session[:user_id] = @user.id
+
+			current_user = UserSerializer.new(@user) 
+
+			render json: current_user, status: :accepted
 			
 		else
-			render json: {failure: "Log in didn't work. Username or password invalid."}
+			render json: {
+				error: "Invalid credentials; Login didn't work", 
+				status: :unathorized
+			}
 		end 
 	end
 
-	def autologin	
-		user = User.find_by_id(params[:user_id])
-		if user
-			render json:UserSerializer.new(user)
+
+	def get_current_user
+		if logged_in?
+			render json: UserSerializer.new(current_user)
 		else
-			render json: {errors: "Local storage and jwt not working"}
+			render json: {
+				error: "No one logged in yet.",
+				status: :unathorized
+			}
 		end 
+	end 
+
+	def destroy
+		session.clear
+		render json: {
+			notice: "Logged out"}, 
+			status: :ok
 	end
-
-
-	# if user and authenticate: generate a token 
-
-
 end 
+
+# where do I call autologin? Also, howard calls it get_current_user? What's the most descriptive name for it? 
+	# def autologin	
+	# 	if logged_in?
+	# 		render json: {
+	# 			user: UserSerializer.new(current_user)
+	# 			}, status: :ok
+
+	# 	else
+	# 		render json: {error: "No current user"}
+	# 	end 
+	# end
+
+
+	# # if user and authenticate: generate a token 
+
+
+# end 
 	# .authenticate comes from bcrpyt 
 # private
 #     def authenticate_user

@@ -43,6 +43,10 @@ module TestFinalRailsApi
     # Middleware like session, flash, cookies can be added back manually.
     # Skip views, helpers and assets when generating a new resource.
     config.api_only = true
+    # add for cookies/sessions 
+    config.middleware.use ActionDispatch::Cookies
+    config.middleware.use ActionDispatch::Session::CookieStore, key: '_cookie_name'
+
     config.generators.system_tests = nil 
     config.generators do |g|
       g.javascript_engine :ks

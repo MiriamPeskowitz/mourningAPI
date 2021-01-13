@@ -1,31 +1,32 @@
 class Api::V1::UsersController < ApplicationController
 
+
   def index
-    users = User.all
+    @users = User.all
     render json: UserSerializer.new(users)
   end
 
   def show 
-    user = User.find(params[:id])
-    render json: UserSerializer.new(user)
+    @user = User.find(params[:id])
+    render json: UserSerializer.new(@user)
   end 
 
   def create
-    user = User.new(user_params)
-    if user.save
-      # jwt = Auth.encrypt({ user_id: user.id })
-      render json: UserSerializer.new(user), status: :accepted
-      # render json: { jwt: jwt, current: user }
+    @user = User.new(user_params)
+    if @user.save
+      session[:user_id] = @user.id
+      render json: UserSerializer.new(@user), status: :accepted
+     
     else
       render json: {error: "Something didn't work; try again."}, status: :unprocessible_entity
     end 
   end
 
   def update
-    user = User.find(params[:id])
-    user.update_attributes(user_params)
-    if user.save
-      render json: UserSerializer.new(user), status: :accepted
+    @user = User.find(params[:id])
+    @user.update_attributes(user_params)
+    if @user.save
+      render json: UserSerializer.new(@user), status: :accepted
     else
       render json: { error: user.errors.full_messages }, status: :unprocessible_entity
     end 
@@ -37,7 +38,7 @@ class Api::V1::UsersController < ApplicationController
 
   private
   def user_params
-    params.require(:user).permit(:id, :username, :email, :password, :description)
+    params.require(:user).permit( :username, :email,  :description, :password, :password_confirmation)
   end  
 end 
 
