@@ -10,13 +10,23 @@ class Api::V1::EntriesController < ApplicationController
     render json: EntrySerializer.new(entry)
   end 
 
-  def create
-    entry = Entry.create(entry_params)
-    if entry.save 
-       render json: EntrySerializer.new(entry), status: :accepted
-     else
-      render json: {errors: note.errors.full_messages}, status: :unprocessible_entity
-    end 
+  # def create //boilerplate code 
+  #   entry = Entry.create(entry_params)
+  #   if entry.save 
+  #      render json: EntrySerializer.new(entry), status: :accepted
+  #    else
+  #     render json: {errors: note.errors.full_messages}, status: :unprocessible_entity
+  #   end 
+  # end
+
+# sample code for user.entry.build -- with current_user 
+   def create
+    @entry = current_user.entries.build(entry_params)
+    if @entry.save
+      render json:  EntrySerializer.new(@entry), status: :created
+    else
+      render json: { error: "Something didn't work; try again."}, status: :unprocessable_entity
+    end
   end
 
   def update
@@ -35,6 +45,6 @@ class Api::V1::EntriesController < ApplicationController
 
   private
   def entry_params
-    params.require(:entry).permit(:id, :title, :content, :public, :user_id)
+    params.require(:entry).permit( :title, :content, :user_id)
   end 
 end 
