@@ -1,10 +1,31 @@
 # README
 
-#Test Api to Prepare for Final Project 
+#Mourning
+A Rails API, final project for Flatiron Fullstack Software Engineering program. 
 
+#User Stories 
+A user wants to sign up to create a profile to mourn a person or several people they have lost recently -- whether it's a parent, aunt, cousin, friend, colleague, anyone. So many people are dying, and we miss them in so many ways, no matter what our relationship to them was. 
+    -- user can sign up, login, logout with react-redux-thunk frontend
+    -- user can make text entries
+A user wants to visit the site's main page to see a fountain, a cascade of mourners, with pieces of info about them: their names, who they have lost, how they are feeling. A user can do this without signing up/logging in. 
 
-#issues
-Should there be two models: user and entry, or should the user model have an attribute that is entries
+# Next Features
+
+A user can decide whether an entry is public or private, so that an entry can be seen only on a user's page, or in the general feed (if public).
+
+A user can see a general feed of entries, creating an immediate sense of being surrounded by people who understand and care. 
+
+A user can add entries that are text or images.
+
+A user can sign up for a once-a-day email-reminder that invites them back to the app, where they can choose different options  
+
+A user can invite friends to support them and see their entries, like Caringbridge.com. 
+
+Possibly, a user can make friends on the site.
+
+#Models
+user and entry
+serialized with fastjson_api
 (id: 17)
 name: Rob
 description: "I am glad to be here"
@@ -15,41 +36,31 @@ entries: {
   public: "yes"
   user_id: 17
   }
-This would definitely be the object, and the way to set up a form, but would the data still be kept in two separate models, I'm thinking? 
+http://localhost:3001/api/v1/users
+// 20210114225140
+// http://localhost:3001/api/v1/users
 
-Also, why does http://localhost:3001/api/v1/users/18/entries.json
-get an error, if the route shows up in rake routes? 
-    error is load_interlock (Def: Execute the supplied block while holding an exclusive lock, preventing any other thread from being inside a run_interlock block at the same time.)
+{
+  "data": [
+    {
+      "id": "18",
+      "type": "user",
+      "attributes": {
+        "username": "Marita",
+        "email": "marita@mail.com",
+        "description": "I just lost my mom and my sister. I am grieving so hard. What will I do?",
+        "password": null
+      },
+      "relationships": {
+        "entries": {
+          "data": [
+            {
+              "id": "5",
+              "type": "entry"
+            }
+          ]
+        }
+      }
+    },
 
-After setting up the API, how to start with the front end? 
-  
-
-#User Stories
-
-A user can sign up (fill out form, her data)(create backend, create forms through react)
-
-A user can make (text) entries
-
-A user can decide whether an entry is public or private
-
-A user can enter an email (authentication is a later phase)
-
-An entry can be seen only on a user's page, or in the general feed (if public).
- 
-For MVP, just add an antry. 
-
-A user can see a general feed of entries, creating an immediate sense of being surrounded by people who understand and care. This feed is an API from the class/model Entries (index/displayed in react)
-
-A user can click on one entry in the list to see the profile and other entries related to it. Card within a card 
-
-A user can see in the URL three different routes: home, profile, index (react-routes)
-
-
-
-#Next phase features:
-
-A user can sign up for a once-a-day email-reminder, that invites them back to the app, where they can choose different options-- by pressing 1 of 3 buttons. Options are held in an API--  
-
-A user can invite friends to support them and see their entries, like Caringbridge. (Or a user can make friends on the site.)
-
-A user can add entries that are text or images
+#License
