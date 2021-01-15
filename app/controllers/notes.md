@@ -168,3 +168,18 @@ export default (state = null, action) => {
 			return state	
 	}
 }
+
+Monday
+-- get started again 
+-- look up bcrypt methods and play with them in console. 
+-- figure out a plan 
+1. Go in and delete everything that feels like too much. 
+
+
+
+
+
+
+
+
+
