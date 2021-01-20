@@ -1,5 +1,5 @@
 class EntrySerializer
   include FastJsonapi::ObjectSerializer
-  attributes :title, :content, :id, :created_at, :user_id
+  attributes :title, :content, :id, :user_id
   belongs_to :user, serializer: UserSerializer
 end
