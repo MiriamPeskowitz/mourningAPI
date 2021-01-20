@@ -20,10 +20,10 @@ class Api::V1::AuthController < ApplicationController
 		end 
 	end
 
-
+# get_current_user is akin to auto_login
 	def get_current_user
 		if logged_in?
-			render json: UserSerializer.new(current_user)
+			render json: UserSerializer.new(current_user), status: :ok
 		else
 			render json: {
 				error: "No one logged in yet.",
@@ -32,29 +32,14 @@ class Api::V1::AuthController < ApplicationController
 		end 
 	end 
 
-	def destroy
 
+	def destroy
 		session.clear
 		render json: {
 			notice: "Logged out"}, 
 			status: :ok
 	end
 end 
-
-# where do I call autologin? Also, howard calls it get_current_user? What's the most descriptive name for it? 
-	# def autologin	
-	# 	if logged_in?
-	# 		render json: {
-	# 			user: UserSerializer.new(current_user)
-	# 			}, status: :ok
-
-	# 	else
-	# 		render json: {error: "No current user"}
-	# 	end 
-	# end
-
-
-	# # if user and authenticate: generate a token 
 
 
 # end 
