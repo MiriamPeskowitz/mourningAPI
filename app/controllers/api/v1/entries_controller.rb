@@ -16,17 +16,18 @@ class Api::V1::EntriesController < ApplicationController
     if @entry.save
       render json:  EntrySerializer.new(@entry), status: :created
     else
-      render json: { errors: note.errors.full_messages.to_sentence}, status: :unprocessable_entity
+      render json: { error: @entry.errors.full_messages.to_sentence}, status: :unprocessable_entity
     end
   end
 
+
   def update
-    entry = Entry.find(params[:id])
-    entry.update_attributes(entry_params)
-    if entry.save
+    @entry = Entry.find(params[:id])
+    @entry.update_attributes(entry_params)
+    if @entry.save
       render json: EntrySerializer.new(entry)
     else
-      render json: {errors: note.errors.full_messages}, status: :unprocessible_entity
+      render json: {error: @entry.errors.full_messages}, status: :unprocessible_entity
     end
   end
 

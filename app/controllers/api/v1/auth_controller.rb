@@ -42,8 +42,6 @@ class Api::V1::AuthController < ApplicationController
 end 
 
 
-# end 
-	# .authenticate comes from bcrpyt 
 # private
 #     def authenticate_user
 #       user_token = request.headers['X-USER-TOKEN']
