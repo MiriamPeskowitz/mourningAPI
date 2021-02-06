@@ -25,14 +25,20 @@ class Api::V1::EntriesController < ApplicationController
     @entry = Entry.find(params[:id])
     @entry.update_attributes(entry_params)
     if @entry.save
-      render json: EntrySerializer.new(entry)
+      render json: EntrySerializer.new(@entry)
     else
       render json: {error: @entry.errors.full_messages}, status: :unprocessible_entity
     end
   end
 
   def destroy
-    Entry.destroy(params[:id])
+     entry = Entry.find(params[:id])
+     if entry.destroy
+      render json: {notice: "entry was deleted, success"}, status: :ok
+    else 
+      error_message = {error: "Entry not found, couldn't be deleted" }
+      render json: error_message, status: :unprocessable_entity
+    end
   end
 
   private
