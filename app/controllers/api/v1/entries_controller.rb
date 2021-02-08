@@ -32,7 +32,6 @@ class Api::V1::EntriesController < ApplicationController
   end
 
   def destroy
-    binding.pry
      entry = Entry.find(params[:id])
      if entry.destroy
       render json: {notice: "entry was deleted, success"}, status: :ok
