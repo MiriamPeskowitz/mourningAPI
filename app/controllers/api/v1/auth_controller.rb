@@ -1,6 +1,6 @@
 class Api::V1::AuthController < ApplicationController
 
-#  login => create a new session 
+
 	def login
 		@user = User.find_by(username: params[:auth][:username])	
 
@@ -20,7 +20,7 @@ class Api::V1::AuthController < ApplicationController
 		end 
 	end
 
-# get_current_user is akin to auto_login
+#
 	def get_current_user
 		if logged_in?
 			render json: UserSerializer.new(current_user), status: :ok
@@ -41,23 +41,3 @@ class Api::V1::AuthController < ApplicationController
 	end
 end 
 
-
-# private
-#     def authenticate_user
-#       user_token = request.headers['X-USER-TOKEN']
-#       if user_token
-#         @user = User.find_by_token(user_token)
-#         #Unauthorize if a user object is not returned
-#         if @user.nil?
-#           return unauthorize
-#         end
-#       else
-#         return unauthorize
-#       end
-#     end
-
-#     def unauthorize
-#       head status: :unauthorized
-#       return false
-#     end
-# end
