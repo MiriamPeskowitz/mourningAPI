@@ -1,6 +1,6 @@
 class Api::V1::AuthController < ApplicationController
 
-#  login => create a new session 
+
 	def login
 		@user = User.find_by(username: params[:auth][:username])	
 
@@ -17,10 +17,10 @@ class Api::V1::AuthController < ApplicationController
 		end 
 	end
 
-# autologin
+
 	def get_current_user
 		if logged_in?
-			render json: UserSerializer.new(current_user)
+			render json: UserSerializer.new(current_user), status: :ok
 		else
 			render json: {
 				error: "No one logged in yet.",
@@ -29,7 +29,7 @@ class Api::V1::AuthController < ApplicationController
 		end 
 	end 
 
-# logout
+
 	def destroy
 		session.clear
 		render json: {
@@ -37,3 +37,4 @@ class Api::V1::AuthController < ApplicationController
 			status: :ok
 	end
 end 
+
