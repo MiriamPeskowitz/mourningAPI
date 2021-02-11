@@ -8,6 +8,10 @@ class ApplicationController < ActionController::API
 	def logged_in?
 		!!current_user
 	end 
+
+	def logged_out?
+		!current_user
+	end 
 end 
 
 

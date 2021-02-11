@@ -23,18 +23,23 @@ class Api::V1::AuthController < ApplicationController
 			render json: UserSerializer.new(current_user), status: :ok
 		else
 			render json: {
-				error: "No one logged in yet.",
+				error: "No one logged in yet."}, 
 				status: :unathorized
-			}
 		end 
 	end 
 
 
 	def destroy
 		session.clear
-		render json: {
-			notice: "Logged out"}, 
-			status: :ok
+		if logged_out?
+			render json: { notice: "Server says: session cleared. user logged out"}, status: :ok
+		else
+			render json: { notice: "not logged out"}, status: :no_content
+		end
 	end
 end 
+# def destroy
+# 		session.clear
+# 		render json: { notice: "Server says: session cleared. user logged out"}, status: :ok
+# 	end
 
