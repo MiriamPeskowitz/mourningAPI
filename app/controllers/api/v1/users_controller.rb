@@ -22,7 +22,8 @@ class Api::V1::UsersController < ApplicationController
 
   def update
     @user = User.find(params[:id])
-    @user.update_attributes(user_params)
+    @user.update(user_params)
+    # user_attributes depraecated? update()
     if @user.save
       render json: UserSerializer.new(@user), status: :accepted
     else
