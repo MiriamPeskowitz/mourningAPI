@@ -15,7 +15,7 @@ class Api::V1::AuthController < ApplicationController
 		if logged_in?
 			render json: UserSerializer.new(current_user), status: :ok
 		else
-			render json: { error: "Can't get current user yet, please log in"}, status: :unathorized
+			render json: { error: "Can't get current user yet, please log in"}  #status: :unathorize
 		end 
 	end 
 
