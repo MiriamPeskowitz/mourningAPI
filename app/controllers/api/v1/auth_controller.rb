@@ -8,7 +8,6 @@ class Api::V1::AuthController < ApplicationController
 			render json: current_user, status: :accepted
 		else
 			render json: { error: "Invalid credentials; Login didn't work"}, status: :unathorized
-
 		end 
 	end
 
@@ -16,7 +15,7 @@ class Api::V1::AuthController < ApplicationController
 		if logged_in?
 			render json: UserSerializer.new(current_user), status: :ok
 		else
-			render json: { error: "No one logged in yet."}, status: :unathorized
+			render json: { error: "Can't get current user yet, please log in"}, status: :unathorized
 		end 
 	end 
 
@@ -25,12 +24,9 @@ class Api::V1::AuthController < ApplicationController
 		if logged_out?
 			render json: { notice: "Server says: session cleared. user logged out"}, status: :ok
 		else
-			render json: { notice: "not logged out"}, status: :no_content
+			render json: { notice: "Not logged out"}, status: :no_content
 		end
 	end
 end 
-# def destroy
-# 		session.clear
-# 		render json: { notice: "Server says: session cleared. user logged out"}, status: :ok
-# 	end
+
 
