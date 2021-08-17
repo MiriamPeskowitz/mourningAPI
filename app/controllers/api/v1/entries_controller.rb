@@ -1,4 +1,5 @@
 class Api::V1::EntriesController < ApplicationController
+  #before actions? 
   
   def index
     entries = Entry.all
